@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="db_minimarketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_categoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="categoria" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_marca">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="marca" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_producto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_categoria" Type="int" Nullable="false" />
+          <Property Name="id_proveedor" Type="int" Nullable="false" />
+          <Property Name="id_marca" Type="int" Nullable="false" />
+          <Property Name="medidas" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="precio_unitario" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'db_minimarket.dbo.tbl_producto_historico' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="tbl_producto_historico">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="id_categoria" />
+            <PropertyRef Name="id_proveedor" />
+            <PropertyRef Name="id_marca" />
+            <PropertyRef Name="medidas" />
+            <PropertyRef Name="descripcion" />
+            <PropertyRef Name="cantidad" />
+            <PropertyRef Name="precio_unitario" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id_categoria" Type="int" Nullable="false" />
+          <Property Name="id_proveedor" Type="int" Nullable="false" />
+          <Property Name="id_marca" Type="int" Nullable="false" />
+          <Property Name="medidas" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="precio_unitario" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_proveedor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="proveedor" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Function Name="usp_consulta_Productos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="opcion" Type="int" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="db_minimarketModelStoreContainer">
+          <EntitySet Name="tbl_categoria" EntityType="Self.tbl_categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_marca" EntityType="Self.tbl_marca" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_producto" EntityType="Self.tbl_producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_proveedor" EntityType="Self.tbl_proveedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_producto_historico" EntityType="Self.tbl_producto_historico" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tbl_producto_historico].[id] AS [id], 
+    [tbl_producto_historico].[id_categoria] AS [id_categoria], 
+    [tbl_producto_historico].[id_proveedor] AS [id_proveedor], 
+    [tbl_producto_historico].[id_marca] AS [id_marca], 
+    [tbl_producto_historico].[medidas] AS [medidas], 
+    [tbl_producto_historico].[descripcion] AS [descripcion], 
+    [tbl_producto_historico].[cantidad] AS [cantidad], 
+    [tbl_producto_historico].[precio_unitario] AS [precio_unitario]
+    FROM [dbo].[tbl_producto_historico] AS [tbl_producto_historico]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_minimarketModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_categoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="categoria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_marca">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_producto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_categoria" Type="Int32" Nullable="false" />
+          <Property Name="id_proveedor" Type="Int32" Nullable="false" />
+          <Property Name="id_marca" Type="Int32" Nullable="false" />
+          <Property Name="medidas" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="precio_unitario" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_proveedor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="proveedor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_producto_historico">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="id_categoria" />
+            <PropertyRef Name="id_proveedor" />
+            <PropertyRef Name="id_marca" />
+            <PropertyRef Name="medidas" />
+            <PropertyRef Name="descripcion" />
+            <PropertyRef Name="cantidad" />
+            <PropertyRef Name="precio_unitario" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id_categoria" Type="Int32" Nullable="false" />
+          <Property Name="id_proveedor" Type="Int32" Nullable="false" />
+          <Property Name="id_marca" Type="Int32" Nullable="false" />
+          <Property Name="medidas" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="precio_unitario" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="db_minimarketEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_categoria" EntityType="Self.tbl_categoria" />
+          <EntitySet Name="tbl_marca" EntityType="Self.tbl_marca" />
+          <EntitySet Name="tbl_producto" EntityType="Self.tbl_producto" />
+          <EntitySet Name="tbl_proveedor" EntityType="Self.tbl_proveedor" />
+          <EntitySet Name="tbl_producto_historico" EntityType="Self.tbl_producto_historico" />
+          <FunctionImport Name="usp_consulta_Productos" ReturnType="Collection(db_minimarketModel.usp_consulta_Productos_Result)">
+            <Parameter Name="opcion" Mode="In" Type="Int32" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="usp_consulta_Productos_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="Int32" Name="id_categoria" Nullable="false" />
+          <Property Type="Int32" Name="id_proveedor" Nullable="false" />
+          <Property Type="Int32" Name="id_marca" Nullable="false" />
+          <Property Type="String" Name="medidas" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="descripcion" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="cantidad" Nullable="false" />
+          <Property Type="Decimal" Name="precio_unitario" Nullable="false" Precision="18" Scale="4" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db_minimarketModelStoreContainer" CdmEntityContainer="db_minimarketEntities">
+          <EntitySetMapping Name="tbl_categoria">
+            <EntityTypeMapping TypeName="db_minimarketModel.tbl_categoria">
+              <MappingFragment StoreEntitySet="tbl_categoria">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="categoria" ColumnName="categoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_marca">
+            <EntityTypeMapping TypeName="db_minimarketModel.tbl_marca">
+              <MappingFragment StoreEntitySet="tbl_marca">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="marca" ColumnName="marca" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_producto">
+            <EntityTypeMapping TypeName="db_minimarketModel.tbl_producto">
+              <MappingFragment StoreEntitySet="tbl_producto">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+                <ScalarProperty Name="id_proveedor" ColumnName="id_proveedor" />
+                <ScalarProperty Name="id_marca" ColumnName="id_marca" />
+                <ScalarProperty Name="medidas" ColumnName="medidas" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="precio_unitario" ColumnName="precio_unitario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_proveedor">
+            <EntityTypeMapping TypeName="db_minimarketModel.tbl_proveedor">
+              <MappingFragment StoreEntitySet="tbl_proveedor">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="proveedor" ColumnName="proveedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_producto_historico">
+            <EntityTypeMapping TypeName="db_minimarketModel.tbl_producto_historico">
+              <MappingFragment StoreEntitySet="tbl_producto_historico">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+                <ScalarProperty Name="id_proveedor" ColumnName="id_proveedor" />
+                <ScalarProperty Name="id_marca" ColumnName="id_marca" />
+                <ScalarProperty Name="medidas" ColumnName="medidas" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="precio_unitario" ColumnName="precio_unitario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_consulta_Productos" FunctionName="db_minimarketModel.Store.usp_consulta_Productos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="db_minimarketModel.usp_consulta_Productos_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+                <ScalarProperty Name="id_proveedor" ColumnName="id_proveedor" />
+                <ScalarProperty Name="id_marca" ColumnName="id_marca" />
+                <ScalarProperty Name="medidas" ColumnName="medidas" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="precio_unitario" ColumnName="precio_unitario" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

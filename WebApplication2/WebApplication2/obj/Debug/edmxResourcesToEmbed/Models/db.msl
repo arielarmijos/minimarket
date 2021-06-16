@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="db_minimarketModelStoreContainer" CdmEntityContainer="db_minimarketEntities">
+    <EntitySetMapping Name="tbl_categoria">
+      <EntityTypeMapping TypeName="db_minimarketModel.tbl_categoria">
+        <MappingFragment StoreEntitySet="tbl_categoria">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="categoria" ColumnName="categoria" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_marca">
+      <EntityTypeMapping TypeName="db_minimarketModel.tbl_marca">
+        <MappingFragment StoreEntitySet="tbl_marca">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="marca" ColumnName="marca" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_producto">
+      <EntityTypeMapping TypeName="db_minimarketModel.tbl_producto">
+        <MappingFragment StoreEntitySet="tbl_producto">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+          <ScalarProperty Name="id_proveedor" ColumnName="id_proveedor" />
+          <ScalarProperty Name="id_marca" ColumnName="id_marca" />
+          <ScalarProperty Name="medidas" ColumnName="medidas" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="precio_unitario" ColumnName="precio_unitario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_proveedor">
+      <EntityTypeMapping TypeName="db_minimarketModel.tbl_proveedor">
+        <MappingFragment StoreEntitySet="tbl_proveedor">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="proveedor" ColumnName="proveedor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="usp_consulta_Productos" FunctionName="db_minimarketModel.Store.usp_consulta_Productos">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="db_minimarketModel.usp_consulta_Productos_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+          <ScalarProperty Name="id_proveedor" ColumnName="id_proveedor" />
+          <ScalarProperty Name="id_marca" ColumnName="id_marca" />
+          <ScalarProperty Name="medidas" ColumnName="medidas" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="precio_unitario" ColumnName="precio_unitario" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

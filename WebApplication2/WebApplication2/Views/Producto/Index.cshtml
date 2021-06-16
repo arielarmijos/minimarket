@@ -1,0 +1,48 @@
+﻿
+@model List<WebApplication2.Models.ViewModel.ListaProductosViewModel>
+
+@{
+    ViewBag.Title = "Listado de Productos";
+
+}
+
+
+ <h2>  @ViewBag.Title</h2>
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <table class="table">
+                <tr>
+                    <th>Id </th>
+                    <th>Categoria </th>
+                    <th>Proveedor </th>
+                    <th>Marca </th>
+                    <th>Medida </th>
+                    <th>Descripcion </th>
+                    <th>Cantidad </th>
+                    <th>Precio Unitario </th>
+
+                </tr>
+
+                @foreach (var item in Model){
+                <tr>
+                    <td> @item.id  </td>
+                    <td> @item.categoria   </td>
+                    <td> @item.proveedor   </td>
+                    <td> @item.marca   </td>
+                    <td> @item.medida   </td>
+                    <td> @item.descripcion   </td>
+                    <td> @item.cantidad   </td>
+                    <td> @item.precio_unitario   </td>
+
+                </tr> 
+
+                }
+
+            </table>
+
+        </div>
+
+    </div>
+    

@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_minimarketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tbl_categoria">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="categoria" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_marca">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="marca" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_producto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_categoria" Type="int" Nullable="false" />
+    <Property Name="id_proveedor" Type="int" Nullable="false" />
+    <Property Name="id_marca" Type="int" Nullable="false" />
+    <Property Name="medidas" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="cantidad" Type="int" Nullable="false" />
+    <Property Name="precio_unitario" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'db_minimarket.dbo.tbl_producto_historico' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="tbl_producto_historico">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="id_categoria" />
+      <PropertyRef Name="id_proveedor" />
+      <PropertyRef Name="id_marca" />
+      <PropertyRef Name="medidas" />
+      <PropertyRef Name="descripcion" />
+      <PropertyRef Name="cantidad" />
+      <PropertyRef Name="precio_unitario" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="id_categoria" Type="int" Nullable="false" />
+    <Property Name="id_proveedor" Type="int" Nullable="false" />
+    <Property Name="id_marca" Type="int" Nullable="false" />
+    <Property Name="medidas" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="cantidad" Type="int" Nullable="false" />
+    <Property Name="precio_unitario" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_proveedor">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="proveedor" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Function Name="usp_consulta_Productos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="opcion" Type="int" Mode="In" />
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="db_minimarketModelStoreContainer">
+    <EntitySet Name="tbl_categoria" EntityType="Self.tbl_categoria" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_marca" EntityType="Self.tbl_marca" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_producto" EntityType="Self.tbl_producto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_proveedor" EntityType="Self.tbl_proveedor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_producto_historico" EntityType="Self.tbl_producto_historico" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [tbl_producto_historico].[id] AS [id], 
+    [tbl_producto_historico].[id_categoria] AS [id_categoria], 
+    [tbl_producto_historico].[id_proveedor] AS [id_proveedor], 
+    [tbl_producto_historico].[id_marca] AS [id_marca], 
+    [tbl_producto_historico].[medidas] AS [medidas], 
+    [tbl_producto_historico].[descripcion] AS [descripcion], 
+    [tbl_producto_historico].[cantidad] AS [cantidad], 
+    [tbl_producto_historico].[precio_unitario] AS [precio_unitario]
+    FROM [dbo].[tbl_producto_historico] AS [tbl_producto_historico]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>
