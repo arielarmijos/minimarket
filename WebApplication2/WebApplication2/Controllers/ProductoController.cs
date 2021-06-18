@@ -44,5 +44,283 @@ namespace WebApplication2.Controllers
 
 
         }
+
+
+        public ActionResult Nuevo()
+        {
+
+          
+
+            List<TablaViewModelCategoria> lst;
+            List<TablaViewModelProveedor> lstprv;
+            List<TablaViewModelMarca> lstmarca;
+
+            using (db_minimarketEntities db = new db_minimarketEntities())
+            {
+
+                lst = (from d in db.tbl_categoria
+
+                       select new TablaViewModelCategoria
+                       {
+                           Id = d.id,
+                           Categoria = d.categoria
+
+                       }).ToList();
+
+                List<SelectListItem> item = lst.ConvertAll(d =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = d.Categoria,
+                        Value = d.Id.ToString(),
+                        Selected = false
+
+                    };
+
+                });
+
+                 ViewBag.Items = item;
+
+                lstprv = (from d in db.tbl_proveedor
+
+                       select new TablaViewModelProveedor
+                       {
+                           Id = d.id,
+                           Proveedor = d.proveedor
+
+                       }).ToList();
+
+                List<SelectListItem> itemprv = lstprv.ConvertAll(d =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = d.Proveedor,
+                        Value = d.Id.ToString(),
+                        Selected = false
+
+                    };
+
+                });
+
+                ViewBag.Itemsprv = itemprv;
+
+
+                lstmarca = (from d in db.tbl_marca
+
+                          select new TablaViewModelMarca
+                          {
+                              Id = d.id,
+                              Marca = d.marca
+
+                          }).ToList();
+
+                List<SelectListItem> itemmarca = lstmarca.ConvertAll(d =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = d.Marca,
+                        Value = d.Id.ToString(),
+                        Selected = false
+
+                    };
+
+                });
+
+                ViewBag.Itemsmarca = itemmarca;
+
+
+
+            }
+
+            return View();
+
+        }
+
+
+        [HttpPost]
+        public ActionResult Nuevo(TablaViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (db_minimarketEntities db = new db_minimarketEntities())
+                    {
+
+                       
+                        var oTabla = new tbl_producto();
+                        oTabla.id_categoria = Convert.ToInt16(Request.Form["Categoria"].ToString()); 
+                        oTabla.id_proveedor = Convert.ToInt16(Request.Form["Proveedor"].ToString()); 
+                        oTabla.id_marca = Convert.ToInt16(Request.Form["Marca"].ToString()); 
+                        oTabla.descripcion= model.Descripcion;
+                        oTabla.cantidad = model.Cantidad;
+                        oTabla.precio_unitario = model.PrecioUnitario;
+
+                        db.tbl_producto.Add(oTabla);
+                        db.SaveChanges();
+                    }
+
+                    return Redirect("~/Producto/");
+                }
+
+                return View(model);
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public ActionResult Editar(int Id)
+        {
+            TablaViewModel model = new TablaViewModel();
+            using (db_minimarketEntities db = new db_minimarketEntities())
+            {
+                var oTabla = db.tbl_producto.Find(Id);
+                model.IdCategoria = oTabla.id_categoria;
+                model.IdProveedor = oTabla.id_proveedor;
+                model.IdMarca = oTabla.id_marca;
+                model.Descripcion = oTabla.descripcion;
+                model.Cantidad = oTabla.cantidad;
+                model.PrecioUnitario = oTabla.precio_unitario;
+                model.Id = oTabla.id;
+            }
+
+            List<TablaViewModelCategoria> lst;
+            List<TablaViewModelProveedor> lstprv;
+            List<TablaViewModelMarca> lstmarca;
+
+            using (db_minimarketEntities db = new db_minimarketEntities())
+            {
+
+                lst = (from d in db.tbl_categoria
+
+                       select new TablaViewModelCategoria
+                       {
+                           Id = d.id,
+                           Categoria = d.categoria
+
+                       }).ToList();
+
+                List<SelectListItem> item = lst.ConvertAll(d =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = d.Categoria,
+                        Value = d.Id.ToString(),
+                        Selected = false
+
+                    };
+
+                });
+
+                ViewBag.Items = item;
+
+                lstprv = (from d in db.tbl_proveedor
+
+                          select new TablaViewModelProveedor
+                          {
+                              Id = d.id,
+                              Proveedor = d.proveedor
+
+                          }).ToList();
+
+                List<SelectListItem> itemprv = lstprv.ConvertAll(d =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = d.Proveedor,
+                        Value = d.Id.ToString(),
+                        Selected = false
+
+                    };
+
+                });
+
+                ViewBag.Itemsprv = itemprv;
+
+
+                lstmarca = (from d in db.tbl_marca
+
+                            select new TablaViewModelMarca
+                            {
+                                Id = d.id,
+                                Marca = d.marca
+
+                            }).ToList();
+
+                List<SelectListItem> itemmarca = lstmarca.ConvertAll(d =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = d.Marca,
+                        Value = d.Id.ToString(),
+                        Selected = false
+
+                    };
+
+                });
+
+                ViewBag.Itemsmarca = itemmarca;
+
+
+
+            }
+
+         
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Editar(TablaViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (db_minimarketEntities db = new db_minimarketEntities())
+                    {
+                        var oTabla = db.tbl_producto.Find(model.Id);
+                        oTabla.id_categoria = Convert.ToInt16(Request.Form["IdCategoria"].ToString());
+                        oTabla.id_proveedor = Convert.ToInt16(Request.Form["IdProveedor"].ToString());
+                        oTabla.id_marca = Convert.ToInt16(Request.Form["IdMarca"].ToString());
+                        oTabla.descripcion = model.Medidas;
+                        oTabla.descripcion = model.Descripcion;
+                        oTabla.cantidad = model.Cantidad;
+                        oTabla.precio_unitario = model.PrecioUnitario;
+
+                        db.Entry(oTabla).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                    return Redirect("~/Producto/");
+                }
+
+                return View(model);
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Eliminar(int Id)
+        {
+            using (db_minimarketEntities db = new db_minimarketEntities())
+            {
+
+                var oTabla = db.tbl_producto.Find(Id);
+                db.tbl_producto.Remove(oTabla);
+                db.SaveChanges();
+            }
+            return Redirect("~/Producto/");
+        }
+
     }
 }

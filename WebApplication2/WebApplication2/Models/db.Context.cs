@@ -44,5 +44,9 @@ namespace WebApplication2.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_consulta_Productos_Result>("usp_consulta_Productos", opcionParameter, idParameter);
         }
+
+        public System.Data.Entity.DbSet<WebApplication2.Models.ViewModel.TablaViewModel> TablaViewModels { get; set; }
+
+        public System.Data.Entity.DbSet<WebApplication2.Models.TblProducto> TblProductoes { get; set; }
     }
 }
